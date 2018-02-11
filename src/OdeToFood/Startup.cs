@@ -125,20 +125,12 @@ namespace OdeToFood
             //    await context.Response.WriteAsync(message);
             //});
 
-
-
-
-
-
-
-
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
             //LD this is the default route
-            routeBuilder.MapRoute("Default",
-                "{controller=Home}/{action=Index}/{id?}");
+            routeBuilder.MapRoute("Default","{controller=Home}/{action=Index}/{id?}");
         }
 
     }
