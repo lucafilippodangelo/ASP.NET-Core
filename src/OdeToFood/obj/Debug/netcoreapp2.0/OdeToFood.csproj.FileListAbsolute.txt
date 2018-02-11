@@ -1,0 +1,11 @@
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\bin\Debug\netcoreapp2.0\OdeToFood.deps.json
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\bin\Debug\netcoreapp2.0\OdeToFood.runtimeconfig.json
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\bin\Debug\netcoreapp2.0\OdeToFood.runtimeconfig.dev.json
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\bin\Debug\netcoreapp2.0\OdeToFood.dll
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\bin\Debug\netcoreapp2.0\OdeToFood.pdb
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp2.0\OdeToFood.csprojResolveAssemblyReference.cache
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp2.0\OdeToFood.csproj.CoreCompileInputs.cache
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp2.0\OdeToFood.AssemblyInfoInputs.cache
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp2.0\OdeToFood.AssemblyInfo.cs
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp2.0\OdeToFood.dll
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp2.0\OdeToFood.pdb
