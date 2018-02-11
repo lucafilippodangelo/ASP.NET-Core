@@ -15,7 +15,7 @@ namespace OdeToFood
     {
         private string _greeting;
 
-        //LD we will pass the "configuration" whan instanciated. 
+        //LD we will pass the "configuration" when instanciated. 
         // in this case is instanciated by dependency injection in "Startup.cs"
         // and receive "Configuration" because I declared in "startup.cs" -> "services.AddSingleton(Configuration);"
         // By doing this all the classes that need of "Configuration" will receive it.
