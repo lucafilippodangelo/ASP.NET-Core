@@ -6,9 +6,8 @@ namespace OdeToFood.Entities
     {
 
         public OdeToFoodDbContext(DbContextOptions options) : base(options)
-        {
-
-        }
+        {}
+        
         //LD STEP20
         public DbSet<Restaurant> Restaurants { get; set; }
     }

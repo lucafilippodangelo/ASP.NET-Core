@@ -43,7 +43,7 @@ In this project I made my fingers dirty with dotnet core, it was the first time 
   - the "Configure" method is where we build the http process pipeline, so we find how the application will respond to http request 
   - the "ConfigureService" method is the place where configure components for the application, for example is the place where configure the inversion of control container for the application.
 
-# adding a configuration source - appsettings.json
+### adding a configuration source - appsettings.json
 
 - added "appsettings.json" and called it from "Startup.cs"
   - .net no longer use "web.config" file for configuration, the only reason why it still exist is to give to IIS instruction how to behave when an "http" request is coming. 
@@ -63,7 +63,7 @@ in "Startup.cs"
                 await context.Response.WriteAsync(message);
             });
 
-# startup.cs and dependency injection
+### startup.cs and dependency injection
 
 the purpose is: instead to get an information from the "appsettings.json" file in order to show it in the browser, we will get it from the class greather, by using interface "IGreeter" and dependency injection
 
@@ -76,11 +76,11 @@ the purpose is: instead to get an information from the "appsettings.json" file i
         }
 
 
-# startup and middleware
+### startup and middleware
 
 A middleware is a piece of "component" in the pipeline that knows how to process something, for instance, an "input request" pass between middleware, but I have to specify the next middleware of the chain
 
-#using "IApplicationBuilder"
+### using "IApplicationBuilder"
 
 - remember that we set the "http request pipeline" and then the "middleware" in "startup.cs" -> "Configure" 
   - //LD STEP6 
@@ -101,7 +101,7 @@ A middleware is a piece of "component" in the pipeline that knows how to process
 
 - //LD STEP6 example of how to set different excaption display output per "environment"
 
-# install nuget "Microsoft.AspNetCore.StaticFiles"
+### install nuget "Microsoft.AspNetCore.StaticFiles"
 
 - add an HTML page under the folder "wwwroot" named "index.html", install a middleware "Microsoft.AspNetCore.StaticFiles" from nuget that look for an html page into the disk and then is able to process the request
 
@@ -113,7 +113,7 @@ A middleware is a piece of "component" in the pipeline that knows how to process
 - //LD STEP8
       app.UseDefaultFiles();
 
-# Setting up ASP.NET MVC Middleware
+### Setting up ASP.NET MVC Middleware
 
 steps:
   - install the nuget for MVC
@@ -121,7 +121,7 @@ steps:
   - register the service //LD STEP10 adding the MVC service -> "services.AddMvc();"" 
 
 
-# Controllers in the MVC framework, "conventional" routes
+### Controllers in the MVC framework, "conventional" routes
 
 - //LD STEP11 I will configure "conventional" routes
 
@@ -139,22 +139,16 @@ and then:
             
       app.Run(ctx => ctx.Response.WriteAsync("Not found"));
 
-# Controllers in the MVC framework, "attribute" routes
+### Controllers in the MVC framework, "attribute" routes
 
 - is possible use an attribute directly in the controller
   - //LD STEP13 [Route("company/[controller]/[action]")]
     
-# Controllers in the MVC framework, "action results"
+### Controllers in the MVC framework, "action results"
 
-- usually any controller inherit from "Controller" in order to be able to use MVC features like "IActionResult" so send something back to the client
-  - usually the RESULT IS INCAPSULATED in an OBJECT THAT IMPLEMENT "IActionResult" INTERFACE.
+- usually any controller inherit from "Controller" in order to be able to use mvc features like "IActionResult" so send something back to the client. The result is incapsulated in an object that implement the "IActionResult" interface.
 
-- MIN 2:00, he talks about the CONTROLLER and all the informations that I can get from the "HttpObject".
-- es. "this.context.request"
-
-- MIN 3:40 "CONTENT" result
-
-- MIN 7:00 after he create the code to SEND BACK AN OBJECT by "ObjectResult" //LD STEP14
+- //LD STEP14 code to send back an object by "ObjectResult" 
 
     public class HomeController : Controller
     {
@@ -165,13 +159,10 @@ and then:
         }
     }
 
-- the client will receive 
-      {"id":1,"name":"The House of Kobe"}
+- the client will receive {"id":1,"name":"The House of Kobe"}
 
 
--------------------------------------------------------------------------------------------
-RENDERING VIEWS
--------------------------------------------------------------------------------------------
+### Rendering Views
 
      public class HomeController : Controller
     {
@@ -184,21 +175,14 @@ RENDERING VIEWS
         }
     }
 
--------------------------------------------------------------------------------------------
-A TABLE FULL OF RESTAURANTS
--------------------------------------------------------------------------------------------
-- He create a "Services" folder for all the INTERACTIONS WITH THE DATABASE
+- creation of a "Services" folder for all the interactions with the database
 
-##########################################################
-in preparation to "DEPENDENCY INJECTION" he create a class to interact with DATA and straight an INTERFACE that I will pass to the CONTROLLER that will never see for example the SQL IMPLEMENTATION. 
-for instance: //LD STEP15
-##########################################################
+- //LD STEP15 in preparation to "dependency injection" creation of a class to interact with data and straight an interface that I will pass to the controller that will never see for example the sql implementation. 
 
      public interface IRestaurantData
     {
         IEnumerable<Restaurant> GetAll();
     }
-
     public class InMemoryRestaurantData : IRestaurantData
     {
         public InMemoryRestaurantData()
@@ -210,27 +194,23 @@ for instance: //LD STEP15
                 new Restaurant { Id = 3, Name="King's Contrivance" }
             };
         }
-
         public IEnumerable<Restaurant> GetAll()
         {
             return _restaurants;
         }
-
         List<Restaurant> _restaurants;
     }
 
-- DEPENDENCY INJECTION //LD STEP16
-
-- - MIN 4:00 he shows how to SET THE CONTROLLER, go in "Startup.cs" -> "ConfigureServices" method
+- //LD STEP16 dependency injection
+  - go in "Startup.cs" -> "ConfigureServices" method
 
       services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
 
-"AddScoped" mean that I will have a new instance for any HTTP REQUEST
+- "AddScoped" mean that I will have a new instance for any HTTP REQUEST
 
           public class HomeController : Controller
     {
         private IRestaurantData _restaurantData;
-
         public HomeController(IRestaurantData restaurantData)//LD STEP16
         {
             _restaurantData = restaurantData; 
@@ -244,51 +224,18 @@ for instance: //LD STEP15
     }
 
 
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+### models and viewmodels
 
-------------------------------------------------------------------------------------------
-Models in the MVC framework
-------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
-MODELS AND VIEW MODELS
-------------------------------------------------------------------------------------------
-########################################################
-he just show HOW, WHEN to use it and give an EXAMPLE 
-########################################################
+- important to know the difference between "entity model" that is exactly the schema of the database and "viewmodel"(or DTO) that is what we will render in html in view, so what the user will see
+  - a "dto" can show informations from two entity models and ofc is not persisted
 
-- he do the DIFFERENCE between ENTITY MODEL that is exactly the schema of the database and VIEW MODEL(or DTO) that is what we will render in html in our VIEW, so what the user will see
-- - a DTO can show informations from two ENTITY MODELS
- for instance
-- - - so WE DON'T PERSIST THE "DTO"
+- //LD SPEP17 example
 
-- PRATICAL EXAMPLE min3:00 --> //LD SPEP17
+- //STEP18 add a property to "RestaurantData.cs" repositoty and return it. Using it in the "details" action of the "Home" controller.
 
-------------------------------------------------------------------------------------------
-DETAIL A RESTAURANT
-------------------------------------------------------------------------------------------
-//STEP18 
-- add a property to "RestaurantData.cs" repositoty and return it. We are using it in the "details" action of the "Home" controller.
+### Entity Framework, installation
 
-- min6:00 he add the html for the "details.cshtml" view
-
-- min9:00 in redirect with C# 6 we can use the "nameof" operator
-
-------------------------------------------------------------------------------------------
-CREATE A RESTAURANT, ACCEPTING FORM INPUT, POST REDIRECT GET PATTERN
-------------------------------------------------------------------------------------------
-- he use the "RestaurantEditViewModel.cs"
-
-- min 6:00 of "ACCEPTING FORM INPUT" he set the list of restaurant "STATIC" and the constructor NON PUBLIC
-
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-----------------------------------------------------------------------------------------------
-ENTITY FRAMEWORK
-----------------------------------------------------------------------------------------------
-###########################################################
-STEP1 WHEN WE HAVE TO USE A DATABASE
-###########################################################
-- I executed the console command
+- execute the console command
      
       install-package Microsoft.entityFrameworkCore.SqlServer
       install-package Microsoft.entityFrameworkCore.Tools -Pre
@@ -298,36 +245,23 @@ and then in my "project.json" setting file I got:
       "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0"
       "Microsoft.EntityFrameworkCore.Tools": "1.1.0-preview4-final"
 
-----------------------------------------------------------------------------------------------
-IMPLEMENTING A DB CONTEXT
+### Entity Framework, implementing "DbContext.cs"
 
-########################################################
 note that the repository class get automatically the "context" "OdeToFoodDbContext", it's enought the setting in "Startup.cs"
 
        public class SqlRestaurantData : IRestaurantData
        {
              private OdeToFoodDbContext _context;
-
              public SqlRestaurantData(OdeToFoodDbContext context)
              {
                    _context = context;
              }
 
-########################################################
-----------------------------------------------------------------------------------------------
-- EACH "DbContext" class will give me access to a single database, by chanhing CONNECTION STRING we can point to a different specific database.
+- each "DbContext" class will give me access to a single database, by changing connection string can point to a different specific database.
+  - inside "DbContext" we create "DbSet<T>" where "T" is a type of entity. In order to refer to a specific model. Each "DbSet" will map a table in the database
+  - //LD STEP20 "DbContext" class 
 
-- inside "DbContext" we create "DbSet<T>" where "T" is a type of entity. In order to refer to a specific MODEL. EACH "DbSet" will MAP a TABLE in the database
-- - In this example a "DbSet" will be "restaurant".
-
-- MIN 1:58 he insert the "DbContext" class //LD STEP20
-
-        //LD STEP20
         public DbSet<Restaurant> Restaurants { get; set; }
-
-- MIN 3:24, now we will create a second implementation of "IRestaurantData" that will work with the database
-
-- MIN 6:00 "Context.SaveChanges"
 
 ----------------------------------------------------------------------------------------------
 CONFIGURING THE ENTITY FRAMEWORK SERVICES

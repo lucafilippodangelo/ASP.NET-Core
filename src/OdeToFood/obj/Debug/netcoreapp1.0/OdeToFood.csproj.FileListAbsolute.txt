@@ -8,3 +8,4 @@ C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp1
 C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp1.0\OdeToFood.AssemblyInfo.cs
 C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp1.0\OdeToFood.dll
 C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp1.0\OdeToFood.pdb
+C:\Users\ldazu\source\repos\Git\ASP.NET-Core\src\OdeToFood\obj\Debug\netcoreapp1.0\OdeToFood.csprojResolveAssemblyReference.cache
