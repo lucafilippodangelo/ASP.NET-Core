@@ -33,7 +33,7 @@ In this project I made my fingers dirty with dotnet core, it was the first time 
 
 ## project implementation description
 
-# the project Json file and startup.cs
+### the project Json file and startup.cs
 
 - "project.json" is useful to add all the dependencies
   - is possible add the string of the dependency just by typing for instance "mvc" or I can do right on the "solution" and then "manage nuget package"
