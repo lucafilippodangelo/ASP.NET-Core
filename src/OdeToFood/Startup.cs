@@ -40,7 +40,7 @@ namespace OdeToFood
             // that any time you need of an instance of "IGreeter" you have to pass
             //the concrete class "Greeter" for implementation
             services.AddSingleton(Configuration);
-            services.AddSingleton<IGreeter, Greeter>();//LD that's the DEPENDENCY INJECTION
+            services.AddSingleton<IGreeter, Greeter>();
 
             //LD STEP10 adding the MVC service, so now I have available this MVC COMPONENT
             services.AddMvc();
@@ -55,8 +55,7 @@ namespace OdeToFood
 
         }
 
-        // This method gets called by the runtime. 
-        //Use this method to configure the HTTP request pipeline.
+        // This method gets called by the runtime, it is useful to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, 
             IHostingEnvironment env, 
             ILoggerFactory loggerFactory,
@@ -65,7 +64,7 @@ namespace OdeToFood
             
             loggerFactory.AddConsole();
 
-
+            
             //LD this default MIDDLEWARE is useful to handle any unmanaged exception
             //LD detect any error in any responce in the pipeline.
             if (env.IsDevelopment()) //LD STEP6 the dafault environment is "Development", so this flag will be "true"
@@ -86,8 +85,6 @@ namespace OdeToFood
             //// it will look at the file sistem into "wwwroot" and will show the content of "index.html"
             //app.UseStaticFiles();
 
-            
-            
             //LD STEP8
             app.UseDefaultFiles();
 

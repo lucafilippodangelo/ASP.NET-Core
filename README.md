@@ -1,6 +1,6 @@
 # ASP.NET-Core-Playground
 
-In this project I made my fingers dirty with the followins:
+In this project I made my fingers dirty with dotnet core, it was the first time I used core(ver.1.0):
 
 - dependency injection
 - middleware 
@@ -31,44 +31,22 @@ In this project I made my fingers dirty with the followins:
   - Partial Views
   - View Components
 
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+## project implementation description
 
-------------------------------------------------------------------------------
-Building Your first ASP.NET Core Application
-------------------------------------------------------------------------------
+# the project Json file and startup.cs
 
-###############################################
-the trainer shows how to do all the settings, he shows as well the place where to set INVERSION OF CONTROL
-###############################################
+- "project.json" is useful to add all the dependencies
+  - is possible add the string of the dependency just by typing for instance "mvc" or I can do right on the "solution" and then "manage nuget package"
 
-+ I did all the settings
-- - https://www.microsoft.com/net/core#macos
+//LD STEP1
+- "startup.cs" is used instead of "Global.aspx" as a place where to write code that has to be executed at the startup of the application
+  - the "Configure" method is where we build the http process pipeline, so we find how the application will respond to http request 
+  - the "ConfigureService" method is the place where configure components for the application, for example is the place where configure the inversion of control container for the application.
 
---------------------------------------------------------------------------------
-THE PROJECT JSON FILE
---------------------------------------------------------------------------------
-+ "project.json" is useful to add all the dependencies
-- - I can add the string of the dependency just by typing for instance "mvc" or I can do right on the "solution" and then "MANAGE NUGET PACKAGE"
+# adding a configuration source - appsettings.json
 
-+ "STARTUP.cs" is used instead of "GLOBAL.aspx" as a place where to write code that has to be executed at the startup of the application
-- - the "Configure" METHOD is where we build the HTTP PROCESS PIPELINE, so we find how the application will respond to HTTP REQUEST 
-- - the "ConfigureService" METHOD (MIN 7:45) is the place where configure COMPONENTS for the application, for example is the place where configure the INVERSION OF CONTROL container for the application.
-
---------------------------------------------------------------------------------
-ADDING A CONFIGURATION SOURCE 
---------------------------------------------------------------------------------
-
-##################################################
-added "appsettings.json" and called it from "Startup.cs"
-##################################################
-
-+ .net no longer use "web.config" file for configuration, the only reason why it still exist is to give to IIS instruction how to behave when an "http" request is coming. "WEB.CONFIG" IS NO LONGER USED FOR CONFIGURATIONS
-
-+ MIN 1:15 we add our personal configuration file with JSON, by selecting the template "ASP.NET Configuration File". -> "appsettings.json"
-
-- - The purpose is store a setting in a file and use it t runtime, then we have to update the "Startup.cs" file, to tell to .net that we have a CUSTOM CONFIGURATION FILE
-- - MIN 6:08 I can jump here to see the code to write in order to READ THE CONFIGURATION FILE
-
+- added "appsettings.json" and called it from "Startup.cs"
+  - .net no longer use "web.config" file for configuration, the only reason why it still exist is to give to IIS instruction how to behave when an "http" request is coming. 
 
 in "appsettings.json"
 
@@ -85,15 +63,12 @@ in "Startup.cs"
                 await context.Response.WriteAsync(message);
             });
 
---------------------------------------------------------------------------------------
-CREATING A GREETING SERVICE
---------------------------------------------------------------------------------------
+# startup.cs and dependency injection
 
-**
-the purpose of this chapter is: instead to get an information from the "appsettings.json" file in order to show it in the browser, we will get it from the class greather, by using interface "IGreeter" and DEPENDENCY INJECTION
-**
+the purpose is: instead to get an information from the "appsettings.json" file in order to show it in the browser, we will get it from the class greather, by using interface "IGreeter" and dependency injection
 
-+ in "Startup.cs" -> "Configure" method, we give in input an "IGreeter" instance
+//LD STEP4
+- in "Startup.cs" -> "Configure" method, we give in input an "IGreeter" instance
 
          public void ConfigureServices(IServiceCollection services)
         {
@@ -101,106 +76,54 @@ the purpose of this chapter is: instead to get an information from the "appsetti
         }
 
 
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# startup and middleware
 
---------------------------------------------------------------------------------------------
-STARTUP AND MIDDLEWARE
---------------------------------------------------------------------------------------------
+A middleware is a piece of "component" in the pipeline that knows how to process something, for instance, an "input request" pass between middleware, but I have to specify the next middleware of the chain
 
---------------------------------------------------------------------------------------------
-HOW MIDDLEWARE WORKS
---------------------------------------------------------------------------------------------
-##########################################################
-+DEFINITION: MIDDLEWARE is a piece of COMPONENT in the PIPELINE that knows how to process something
-+ + for instance, an "input request" pass between MIDDLEWARE, but I have to specify the next middleware of the chain
-##########################################################
+#using "IApplicationBuilder"
 
-- we need to set COMPONENTS to let the application behave as expected and answers to the REQUESTS
-
---------------------------------------------------------------------------------------------
-USING "IApplicationBuilder"
---------------------------------------------------------------------------------------------
-#########################################################
-remember that we set the HTTP REQUEST PIPELINE in "startup.cs" -> "Configure" 
-
-#########################################################
-- we set MIDDLEWARE in "startup.cs" -> "Configure" 
-
-- the trainer present all the default MIDDLEWARE
+- remember that we set the "http request pipeline" and then the "middleware" in "startup.cs" -> "Configure" 
+  - //LD STEP6 
+    -example of default middleware to handle any unmanaged exception
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-
-- MIN 2:00 each NUGET PACKAGE contain some MIDDLEWARE usable by "IApplicationBuilder"
-
-- MIN 6:00 the order how middleware are called is important
-
-#########################################################
-most of the MIDDLEWARE are available by installation of NUGET PACKAGE, usually as EXTENSION METHODS of "IApplicationBuilder"
-#########################################################
-
--------------------------------------------------------------------------------------------
-SHOWING EXCEPTION DETAILS, MIDDLEWARE TO MATCH THE ENVIRONMENT.
--------------------------------------------------------------------------------------------
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-#########################################################
-List of "services" that I get for free in the  "Configure" method
+- List of "services" that I get for free in the "Configure" method, can be USED in the CONSTRUCTOR of "Startup.cs"
             
             IApplicationBuilder app, 
             IHostingEnvironment env, 
             ILoggerFactory loggerFactory,
 
-but them can be USED in the CONSTRUCTOR of "Startup.cs"
-#########################################################
-- search for //LD STEP5 to generate an exception
+- //LD STEP5 example of how to generate an exception
 
-- search for //LD STEP6 he talks about ENVIRONMENT, I can SET DIFFERENT EXCEPTION VIDEO OUTPUT per ENVIRONMENT
+- //LD STEP6 example of how to set different excaption display output per "environment"
 
--------------------------------------------------------------------------------------------
-SERVING FILES
--------------------------------------------------------------------------------------------
-- he add an HTML page under the folder "wwwroot" named "index.html"
+# install nuget "Microsoft.AspNetCore.StaticFiles"
 
-now I have to INSTALL a MIDDLEWARE that look for an html page inthe disk and then is able to PROCESS THAT REQUEST
+- add an HTML page under the folder "wwwroot" named "index.html", install a middleware "Microsoft.AspNetCore.StaticFiles" from nuget that look for an html page into the disk and then is able to process the request
 
-+ MIN 1:40 installing of the NUGET "Microsoft.AspNetCore.StaticFiles", no now I can add another MIDDLEWARE
-
-es. //LD STEP7
+- //LD STEP7
         
        // it will look at the file sistem into "wwwroot"
        app.UseStaticFiles();
 
-es. //LD STEP8
+- //LD STEP8
       app.UseDefaultFiles();
 
---------------------------------------------------------------------------------------------
-Setting uo ASP.NET MVC Middleware
---------------------------------------------------------------------------------------------
+# Setting up ASP.NET MVC Middleware
 
-- first step is install the nugat for MVC
-- second step //LD STEP9 configure the MIDDLEWARE for MVC
-- thirth step is REGISTER THE SERVICE 
-
-            //LD STEP10 adding the MVC service
-            services.AddMvc(); 
+steps:
+  - install the nuget for MVC
+  - //LD STEP9 configure the middleware for mvc
+  - register the service //LD STEP10 adding the MVC service -> "services.AddMvc();"" 
 
 
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
------------------------------------------------------------------------------------------
-Controllers in the MVC framework
------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------
-CONVENTIONAL ROUTES
------------------------------------------------------------------------------------------
-- in //LD STEP11 I will configure the routes
+# Controllers in the MVC framework, "conventional" routes
+
+- //LD STEP11 I will configure "conventional" routes
 
          app.UseMvc(ConfigureRoutes);
 
@@ -209,36 +132,22 @@ and then:
          private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
             //LD this is the default route
-            routeBuilder.MapRoute("Default",
-                "{controller=Home}/{action=Index}/{id?}");
+            routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
         }
 
 - //LD STEP12 if MVC doesn't map any request, this is the default answer
             
       app.Run(ctx => ctx.Response.WriteAsync("Not found"));
 
-- of course i CAN DEFINE MANY ROUTE RULES for any specific and particular controller route
+# Controllers in the MVC framework, "attribute" routes
 
-
------------------------------------------------------------------------------------------
-ATTRIBUTE ROUTES
------------------------------------------------------------------------------------------
-- we can use an attribute directly in the controller
-
-- FOLLOW ALL THE VIDEO, because the "route attributing" can be static, when I specify the name of the action or generic by using "TOKEN" PREDEFINED by MVC. For Instance [controller]
-
-          //LD STEP13
-          [Route("company/[controller]/[action]")]
+- is possible use an attribute directly in the controller
+  - //LD STEP13 [Route("company/[controller]/[action]")]
     
-#########################################################
-WE CAN COMBINE BOTH TYPES OF ATTRIBUTES (MIN 4:70)
-#########################################################
+# Controllers in the MVC framework, "action results"
 
--------------------------------------------------------------------------------------------
-ACTION RESULTS
--------------------------------------------------------------------------------------------
-- usually any controller inherit from "Controller" in order to be able to use MVC features like "IActionResult" so SEND SOMETHING BACK TO THE CLIENT
-- - usually the RESULT IS INCAPSULATED in an OBJECT THAT IMPLEMENT "IActionResult" INTERFACE.
+- usually any controller inherit from "Controller" in order to be able to use MVC features like "IActionResult" so send something back to the client
+  - usually the RESULT IS INCAPSULATED in an OBJECT THAT IMPLEMENT "IActionResult" INTERFACE.
 
 - MIN 2:00, he talks about the CONTROLLER and all the informations that I can get from the "HttpObject".
 - es. "this.context.request"
